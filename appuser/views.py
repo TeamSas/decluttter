@@ -1,15 +1,20 @@
-from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework import status
 from appuser.models import Stream, Follower
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from appuser.serializers import StreamSerializer, FollowerSerializer
-import pdb
+from django.contrib.auth.models import User
 
 
 class StreamListCreateAPIView(ListCreateAPIView):
     queryset = Stream.objects.all()
     serializer_class = StreamSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = StreamSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -22,14 +27,13 @@ class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        except Stream.DoesNotExist:
+        except:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def put(self, request, stream_id, format=None, *args, **kwargs):
         snippet = Stream.objects.get(pk=stream_id)
         serializer = StreamSerializer(snippet, data=request.data)
-        # pdb.set_trace()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -40,7 +44,6 @@ class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     def patch(self, request, stream_id, format=None, *args, **kwargs):
         snippet = Stream.objects.get(pk=stream_id)
         serializer = StreamSerializer(snippet, data=request.data)
-        # pdb.set_trace()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -55,8 +58,32 @@ class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 # Follower Table Create, Retrieve, Update and Destroy methods below
 class FollowerCreateAPIView(CreateAPIView):
-    queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
+    def post(self, request, *args, **kwargs):
+        follower_id = User.objects.get(email=request.data['follower'])
+
+        data = {
+            'followee': request.user.id,
+            'follower': follower_id.id
+        }
+
+        data_reverse = {
+            'followee': follower_id.id,
+            'follower': request.user.id
+        }
+
+        serializer = FollowerSerializer(data=data)
+        serializer_reverse = FollowerSerializer(data=data_reverse)
+
+        if serializer.is_valid() and serializer_reverse.is_valid():
+            serializer.save()
+            serializer_reverse.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class FollowerListAPIView(ListAPIView):
     queryset = Follower.objects.all()
@@ -66,19 +93,19 @@ class FollowerListAPIView(ListAPIView):
 class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = FollowerSerializer
 
-    def get(self, request, followee_id, format=None, *args, **kwargs):
+    def get(self, request, followee_id, follower_id, format=None, *args, **kwargs):
         try:
-            queryset = Follower.objects.get(followee=followee_id)
+            queryset = Follower.objects.get(followee=followee_id, follower=follower_id)
             serializer = FollowerSerializer(queryset)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        except Follower.DoesNotExist:
+        except:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-    def put(self, request, followee_id, format=None, *args, **kwargs):
-        snippet = Follower.objects.get(followee=followee_id)
+    def put(self, request, followee_id, follower_id, format=None, *args, **kwargs):
+        snippet = Follower.objects.get(followee=followee_id, follower=follower_id)
         serializer = FollowerSerializer(snippet, data=request.data)
 
         if serializer.is_valid():
@@ -88,8 +115,8 @@ class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         else:
             return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-    def patch(self, request, followee_id, format=None, *args, **kwargs):
-        snippet = Follower.objects.get(followee=followee_id)
+    def patch(self, request, followee_id, follower_id, format=None, *args, **kwargs):
+        snippet = Follower.objects.get(followee=followee_id, follower=follower_id)
         serializer = FollowerSerializer(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -98,7 +125,9 @@ class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         else:
             return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, followee_id, *args, **kwargs):
-        snippet = Follower.objects.get(followee=followee_id)
+    def delete(self, request, followee_id, follower_id, *args, **kwargs):
+        snippet = Follower.objects.get(followee=followee_id, follower=follower_id)
         snippet.delete()
+        snippet_reverse = Follower.objects.get(followee=follower_id, follower=followee_id)
+        snippet_reverse.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
