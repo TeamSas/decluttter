@@ -71,11 +71,20 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      server: {
+        proxies: [{
+        context: '/api',
+        host: 'localhost',
+        port: 8000
+      }]
+      },
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
+          middleware: function (connect, options) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
             return [
+              proxy,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -400,6 +409,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
