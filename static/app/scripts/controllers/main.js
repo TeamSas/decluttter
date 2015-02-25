@@ -14,4 +14,4 @@ angular.module('declutterApp')
       'AngularJS',
       'Karma'
     ];
-  });
+   });
