@@ -14,4 +14,6 @@ angular.module('declutterApp')
       'AngularJS',
       'Karma'
     ];
+
+    console.log('AboutCtrl loaded');
   });

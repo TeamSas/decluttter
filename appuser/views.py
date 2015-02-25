@@ -7,8 +7,11 @@ from django.contrib.auth.models import User
 
 
 class StreamListCreateAPIView(ListCreateAPIView):
-    queryset = Stream.objects.all()
     serializer_class = StreamSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Stream.objects.filter(user=user)
 
     def post(self, request, *args, **kwargs):
         serializer = StreamSerializer(data=request.data)
