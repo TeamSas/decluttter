@@ -1,6 +1,6 @@
 from rest_framework.views import APIView, Response
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView
 from items.api.serializers import ItemSerializer
 from items.models import Item
 
@@ -32,7 +32,7 @@ class ItemDetailAPIView(APIView):
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
 
-            serializer.save()
+            serializer.save(poster=request.user)
             return Response(serializer.data, status.HTTP_202_ACCEPTED)
 
         else:
@@ -46,7 +46,7 @@ class ItemCreateAPIView(CreateAPIView):
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
 
-            serializer.save()
+            serializer.save(poster=request.user)
             return Response(serializer.data, status.HTTP_201_CREATED)
 
         else:
@@ -68,3 +68,19 @@ class ItemGenericRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Item.objects.all()
+
+
+class ItemListCreateAPIView(ListCreateAPIView):
+   serializer_class = ItemSerializer
+
+   def get_queryset(self):
+       user = self.request.user
+       return Item.objects.filter(poster=user)
+
+
+class ClaimItemListCreateAPIView(ListCreateAPIView):
+    serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Item.Objects.filter(claimer=user)

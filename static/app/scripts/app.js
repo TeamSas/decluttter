@@ -1,13 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name declutterApp
- * @description
- * # declutterApp
- *
- * Main module of the application.
- */
 angular
   .module('declutterApp', [
     'ngAnimate',
@@ -20,51 +12,51 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: '/views/main.html',
         controller: 'MainCtrl'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
+        templateUrl: '/views/about.html',
         controller: 'AboutCtrl'
       })
       .when('/login', {
-            templateURL: 'views/login.html',
+            templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
         })
         .when('/logout', {
-            templateURL: 'views/logout.html',
+            templateUrl: 'views/logout.html',
             controller: 'LogoutCtrl'
         })
         .when('/register', {
-            templateURL: 'views/register.html',
+            templateUrl: 'views/register.html',
             controller: 'RegisterCtrl'
         })
         .when('/friendscrap', {
-            templateURL: 'views/friendscrap.html',
+            templateUrl: 'views/friendscrap.html',
             controller: 'FriendscrapCtrl'
         })
         .when('/mycrap', {
-            templateURL: 'views/mycrap.html',
+            templateUrl: '/views/mycrap.html',
             controller: 'MycrapCtrl'
         })
         .when('/mycrap/myclaimed', {
-            templateURL: 'views/myclaimed.html',
+            templateUrl: 'views/myclaimed.html',
             controller: 'MycrapCtrl'
         })
         .when('/mycrap/postitem', {
-            templateURL: 'views/postitem.html',
+            templateUrl: 'views/postitem.html',
             controller: 'MycrapCtrl'
         })
         .when('/mycrap/:item', {
-            templateURL: 'views/edititem.html',
+            templateUrl: 'views/edititem.html',
             controller: 'MycrapCtrl'
         })
         .when('/myfriends', {
-            templateURL: 'views/myfriends.html',
+            templateUrl: 'views/myfriends.html',
             controller: 'MyfriendsCtrl'
         })
         .when('/myfriends/addfriend', {
-            templateURL: 'views/addfriend.html',
+            templateUrl: 'views/addfriend.html',
             controller: 'MyfriendsCtrl'
         })
       .otherwise({
