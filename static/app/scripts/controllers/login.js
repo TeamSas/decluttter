@@ -4,6 +4,7 @@ angular.module('declutterApp')
   .controller('LoginCtrl', function ($scope, $location, djangoAuth, Validate) {
     $scope.model = {'username':'','password':''};
   	$scope.complete = false;
+    $scope.name = "";
     $scope.login = function(formData){
       $scope.errors = [];
       Validate.form_validation(formData,$scope.errors);
@@ -12,6 +13,7 @@ angular.module('declutterApp')
         .then(function(data){
         	// success case
         	$location.path("/");
+            $scope.name = $scope.model.username;
         },function(data){
         	// error case
         	$scope.errors = data;
