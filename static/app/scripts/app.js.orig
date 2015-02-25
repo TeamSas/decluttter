@@ -36,7 +36,11 @@ angular
             controller: 'FriendscrapCtrl'
         })
         .when('/mycrap', {
+<<<<<<< HEAD
+            templateUrl: '/views/mycrap.html',
+=======
             templateUrl: 'views/mycrap.html',
+>>>>>>> b064e6fde9b41fb5cddd1609956abd9b9a50b9c9
             controller: 'MycrapCtrl'
         })
         .when('/mycrap/myclaimed', {

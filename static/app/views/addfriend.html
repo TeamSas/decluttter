@@ -1,0 +1,14 @@
+<div class="btn-group">
+    <label class="btn btn" ng-model="radioModel" btn-radio="'myfriends'"><a ng-href="#/myfriends">My Friends</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'addfriend'"><a ng-href="#/myfriends/addfriend">Add a Friend</a></label>
+</div>
+<br>
+<br>
+<div class="well">
+<p class="lead" id="additem">Find and Connect with More Friends
+    <form class="form-group" name="newfriendForm">
+    <p>Email:  <input type="email" ng-model="formFriendEmail" required></p>
+    <button class="btn btn-primary" ng-click="addFriend()"><strong>Add Friend</strong></button>
+</form>
+</p>
+</div>

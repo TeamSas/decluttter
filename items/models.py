@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -20,8 +21,8 @@ class Item(models.Model):
         ('AUTOMOTIVE', 'Automotive'),
     )
 
-    poster_id = models.IntegerField()
-    claimer_id = models.IntegerField()
+    poster = models.ForeignKey(User, related_name="posted_items")
+    claimer = models.ForeignKey(User, null=True, blank=True, related_name="claimed_items")
     item_name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     created = models.DateField(auto_now_add=True)

@@ -80,4 +80,11 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+<<<<<<< HEAD
+=======
+
+  .other-color{
+      background: #f0ac1d;
+  }
+>>>>>>> ebdf937432e747e27a0f68c15e3d0b09128b03c1
 }

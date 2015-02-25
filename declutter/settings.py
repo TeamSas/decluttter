@@ -36,15 +36,23 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'rest_framework',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'appuser',
     'items',
-    'debug_toolbar'
+    'debug_toolbar',
+    'rest_auth',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,6 +68,19 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'declutter.urls'
 
 WSGI_APPLICATION = 'declutter.wsgi.application'
+
+#For Django-allauth Template Context Processor Settings
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.request",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "allauth.socialaccount.context_processors.socialaccount"
+)
 
 
 # Database
@@ -103,6 +124,7 @@ REST_FRAMEWORK = {
     )
 }
 
+SITE_ID = 1
 
 #EMAIL settings
 EMAIL_USE_TLS = True

@@ -1,0 +1,32 @@
+<div class="btn-group">
+    <label class="btn btn" ng-model="radioModel" btn-radio="'myfriends'"><a ng-href="#/myfriends">My Friends</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'addfriend'"><a ng-href="#/myfriends/addfriend">Add a Friend</a></label>
+</div>
+<br>
+<br>
+<div class="well">
+<p class="lead" id="myfriends">My Friends</p>
+<div>
+    <table class="table">
+    <thead>
+    <tr>
+        <th ng-click="sortBy='username';reverse=!reverse">Username</th>
+        <th ng-click="sortBy='email';reverse=!reverse">Email</th>
+        <th ng-click="sortBy='first_name';reverse=!reverse">First Name</th>
+        <th ng-click="sortBy='last_name';reverse=!reverse">Last Name</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+
+    <tbody ng-repeat="friend in friends | orderBy: sortBy:reverse" class="friend">
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td bn-index-watch><a ng-click="removeFriend(friend)">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
