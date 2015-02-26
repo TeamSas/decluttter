@@ -64,7 +64,11 @@ class FollowerCreateAPIView(CreateAPIView):
     serializer_class = FollowerSerializer
 
     def post(self, request, *args, **kwargs):
-        follower_id = User.objects.get(email=request.data['follower'])
+        try:
+            follower_id = User.objects.get(email=request.data['follower'])
+
+        except:
+            return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
             'followee': request.user.id,

@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('declutterApp')
-  .controller('LoginCtrl', function ($scope, $location, djangoAuth, Validate) {
+  .controller('LoginCtrl', function ($scope, $location, $rootScope, djangoAuth, Validate) {
     $scope.model = {'username':'','password':''};
   	$scope.complete = false;
-    $scope.name = "";
     $scope.login = function(formData){
       $scope.errors = [];
       Validate.form_validation(formData,$scope.errors);
@@ -12,8 +11,8 @@ angular.module('declutterApp')
         djangoAuth.login($scope.model.username, $scope.model.password)
         .then(function(data){
         	// success case
-        	$location.path("/");
-            $scope.name = $scope.model.username;
+        	$location.path("/mycrap");
+            $rootScope.logname = $scope.model.username;
         },function(data){
         	// error case
         	$scope.errors = data;
