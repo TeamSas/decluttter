@@ -52,6 +52,7 @@ angular
         .when('/mycrap/myclaimed', {
             templateUrl: 'views/myclaimed.html',
             controller: 'MyclaimedCtrl',
+            resolve: {
             authenticated: ['djangoAuth', function(djangoAuth){
             return djangoAuth.authenticationStatus();
             }],
