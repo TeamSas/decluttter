@@ -30,5 +30,5 @@ class Item(models.Model):
     availability = models.BooleanField(default=True)
     category = models.CharField(max_length=50, choices=CATEGORIES)
 
-    def __str__(self):
-        return "%s on %" % (self.item_name, self.created)
+    def __unicode__(self):
+        return "{}s on {}.format"(self.item_name, self.created)
