@@ -31,4 +31,5 @@ class Item(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORIES)
 
     def __unicode__(self):
-        return "{}s on {}".format(self.item_name, self.created)
+        return "{} on {}".format(self.item_name, self.created)
+
