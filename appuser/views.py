@@ -68,7 +68,7 @@ class FollowerCreateAPIView(CreateAPIView):
             follower_id = User.objects.get(email=request.data['follower'])
 
         except:
-            return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
+           return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
             'followee': request.user.id,
