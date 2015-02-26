@@ -70,6 +70,13 @@ class FollowerCreateAPIView(CreateAPIView):
         except:
            return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
+        try:
+            if Follower.objects.get(followee=request.user.id, follower=follower_id.id):
+                return Response({"error": "You are already friends"}, status=status.HTTP_404_NOT_FOUND)
+
+        except:
+            pass
+
         data = {
             'followee': request.user.id,
             'follower': follower_id.id
@@ -83,13 +90,14 @@ class FollowerCreateAPIView(CreateAPIView):
         serializer = FollowerSerializer(data=data)
         serializer_reverse = FollowerSerializer(data=data_reverse)
 
+
         if serializer.is_valid() and serializer_reverse.is_valid():
             serializer.save()
             serializer_reverse.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
-            return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Please enter a valid email"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowerListAPIView(ListAPIView):
