@@ -2,7 +2,7 @@ from rest_framework.views import APIView, Response
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView
 from items.api.serializers import ItemSerializer
-from items.models import Item
+from items.models import Item, User
 
 
 class ItemListAPIView(APIView):
@@ -83,4 +83,32 @@ class ClaimItemListCreateAPIView(ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Item.Objects.filter(claimer=user)
+        return Item.objects.filter(claimer=user)
+
+
+class ClaimItemDetailAPIView(CreateAPIView):
+    serializer_class = ItemSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = ItemSerializer(data=request.data)
+        item = Item.objects.filter(pk=kwargs['item_id'])
+        user = self.request.user
+        # user = User.objects.get(username=request.DATA['user'])
+        item.update(claimer=user)
+
+        if serializer.is_valid():
+            serializer.save(claimer=request.user)
+            #can we add availability=false here?
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+class ClaimGenericRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    model = Item
+    serializer_class = ItemSerializer
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        return Item.objects.all()

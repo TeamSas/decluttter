@@ -70,7 +70,6 @@ class FollowerCreateAPIView(CreateAPIView):
         except:
            return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
-
         data = {
             'followee': request.user.id,
             'follower': follower_id.id

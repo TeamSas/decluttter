@@ -6,15 +6,6 @@
 
 angular.module('declutterApp')
   .controller('FriendscrapCtrl', function ($scope, $http) {
-//    $http.get('/api/appuser/list/follower/').success(function(data) {
-//        console.log(data);
-//        $scope.friends = data;
-//    }).
-//    error(function(data, status, headers, config) {
-//    });
-//  });
-
-
     var friends = $http.get('/api/appuser/list/follower/');
         friends.success(function(data){
             console.log(data);
