@@ -43,5 +43,15 @@ angular.module('declutterApp')
         error(function(data){
                 console.log("error with poster_items " + data);
         });
-  });
+
+
+    //Compare the array of followers to items in arrayofObjects
+        function friend_scrap(Followers, Objects){
+            console.log("hey you reached friends crap custom function");
+        }
+
+
+        friend_scrap(arrayOfFollowers, arrayOfObjects);
+
+    });
 
