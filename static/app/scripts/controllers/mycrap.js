@@ -2,6 +2,15 @@
 
 angular.module('declutterApp')
 
+  .filter('availbool', function(){
+        return function(boolValue) {
+            if (boolValue === true)
+                return "Claimed";
+            else
+                return "Available";
+        };
+    })
+
   .controller('MycrapCtrl', function ($scope, $http, $cookies, $location) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -72,4 +81,5 @@ angular.module('declutterApp')
         alert("Deleting the item");
         return item.show = true;
     };
+
   });

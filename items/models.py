@@ -32,3 +32,4 @@ class Item(models.Model):
 
     def __unicode__(self):
         return "{} on {}".format(self.item_name, self.created)
+

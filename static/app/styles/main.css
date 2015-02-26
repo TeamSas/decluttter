@@ -82,6 +82,10 @@ body {
   }
 
   .other-color{
-      background: #f0ac1d;
+      background: #dbeaf0;
   }
+
+  .well{
+      background-color: #dbeaf0;
+}
 }
