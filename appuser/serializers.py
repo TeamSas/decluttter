@@ -10,6 +10,5 @@ class StreamSerializer(serializers.ModelSerializer):
 class FollowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follower
-        depth = 1
 
 __author__ = 'andy'
