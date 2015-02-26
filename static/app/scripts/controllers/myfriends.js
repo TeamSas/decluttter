@@ -8,13 +8,13 @@ angular.module('declutterApp')
                 var data = {
                     "follower": $scope.formFriendEmail
             };
-
             console.log(data);
 
 
             $http.post('/api/appuser/create/follower/', data).
                 success(function (data) {
                     console.log(data);
+                    $scope.formFriendEmail = '';
                 }).
                 error(function (data) {
                     $scope.error = ["Error adding New User"];
@@ -23,9 +23,3 @@ angular.module('declutterApp')
         }
 
     });
-
-
-
-
-
-
