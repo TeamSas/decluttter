@@ -1,34 +1,3 @@
-<!--
-<div class="well">
-    <div ng-repeat="item in items">
-        <div class="lead">
-            <p class="item"> {{ item.item_name }}</p>
-            <p class="item_desc"> {{ item.description }} </p>
-            <label class="btn btn" ng-model="radioModel" btn-radio="'myclaimed'"><a ng-href="#/mycrap/myclaimed">My Claimed Items</a></label>
-    </div>
-</div>
--->
-
-<!--
-<div class="well">
-    <p class="lead">My Friends Items</p>
-    <table class="table">
-        <tbody ng-repeat="item in items">
-            <tr>
-                <td>{{ item.item_name }} </td>
-                <td>{{ item.description }} </td>
-                <td><label class="btn btn" ng-model="radioModel" btn-radio="'myclaimed'"><a ng-href="#/mycrap/myclaimed">Claim this Item</a></label></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="btn-group">
-   <label class="btn btn" ng-model="radioModel" btn-radio="'mycrap'"><a ng-href="#/mycrap">My Posted Items</a></label>
-   <label class="btn btn" ng-model="radioModel" btn-radio="'postitem'"><a ng-href="#/mycrap/postitem">Post an Item</a></label>
-   <label class="btn btn" ng-model="radioModel" btn-radio="'myclaimed'"><a ng-href="#/mycrap/myclaimed">My Claimed Items</a></label>
-</div>
--->
 
 <br>
 <br>
@@ -38,19 +7,19 @@
    <table class="table">
    <thead>
    <tr>
-       <th ng-click="sortBy='distance';reverse=!reverse">Category</th>
-       <th ng-click="sortBy='item_name';reverse=!reverse">Item Name</th>
-       <th>Description</th>
+       <th ng-click="sortBy='distance';reverse=!reverse">ID</th>
+       <th ng-click="sortBy='item_name';reverse=!reverse">User Name</th>
+       <th>Item Description </th>
        <th>Claim This</th>
    </tr>
    </thead>
 
-   <tbody ng-repeat="item in items | filter: itemFilter | orderBy: sortBy:reverse" class="item">
+   <tbody ng-repeat="friend in friends" class="item">
        <tr>
+           <td> {{ friend.id}} </td>
+           <td> {{ friend.user_name}} </td>
 
-           <td>{{ item.category }}</td>
-           <td>{{ item.item_name }}</td>
-           <td>{{ item.description }}</td>
+
            <td><a ng-href="#/mycrap/myclaimed">Claim this Item</a></td>
        </tr>
    </tbody>

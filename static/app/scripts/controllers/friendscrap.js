@@ -6,9 +6,22 @@
 
 angular.module('declutterApp')
   .controller('FriendscrapCtrl', function ($scope, $http) {
-    $http.get('/api/items/').success(function(data) {
-        $scope.items = data;
-    }).
-  error(function(data, status, headers, config) {
+//    $http.get('/api/appuser/list/follower/').success(function(data) {
+//        console.log(data);
+//        $scope.friends = data;
+//    }).
+//    error(function(data, status, headers, config) {
+//    });
+//  });
+
+
+    var friends = $http.get('/api/appuser/list/follower/');
+        friends.success(function(data){
+            console.log(data);
+            $scope.friends=data;
+    });
+    friends.error(function(data){
+        $scope.error = ["Error with items"];
+        console.log("error" + data);
     });
   });
