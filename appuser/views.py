@@ -101,8 +101,12 @@ class FollowerCreateAPIView(CreateAPIView):
 
 
 class FollowerListAPIView(ListAPIView):
-    queryset = Follower.objects.all()
+    # queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
+    def get_queryset(self):
+        user = self.request.user.id
+        return Follower.objects.filter(followee=user)
 
 
 class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
