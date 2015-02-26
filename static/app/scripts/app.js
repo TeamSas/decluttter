@@ -33,31 +33,66 @@ angular
         })
         .when('/friendscrap', {
             templateUrl: 'views/friendscrap.html',
-            controller: 'FriendscrapCtrl'
+            controller: 'FriendscrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
         })
         .when('/mycrap', {
             templateUrl: 'views/mycrap.html',
-            controller: 'MycrapCtrl'
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/myclaimed', {
             templateUrl: 'views/myclaimed.html',
-            controller: 'MycrapCtrl'
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/postitem', {
             templateUrl: 'views/postitem.html',
-            controller: 'MycrapCtrl'
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/:item', {
             templateUrl: 'views/edititem.html',
-            controller: 'MycrapCtrl'
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/myfriends', {
             templateUrl: 'views/myfriends.html',
-            controller: 'MyfriendsCtrl'
+            controller: 'MyfriendsCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/myfriends/addfriend', {
             templateUrl: 'views/addfriend.html',
-            controller: 'MyfriendsCtrl'
+            controller: 'MyfriendsCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
       .otherwise({
         redirectTo: '/'

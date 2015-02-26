@@ -12,7 +12,8 @@ angular.module('declutterApp')
         .then(function(data){
         	// success case
         	$scope.complete = true;
-          $location.path("/");
+            alert("Thank you for registering");
+          $location.path("/login");
         },function(data){
         	// error case
         	$scope.errors = data;
