@@ -8,11 +8,11 @@
 <div class="well">
 <p class="lead" id="myitems">Stuff I'm Currently Trying to Give Away</p>
 <p><strong>{{ getTotalItems() }}</strong> items posted.</p>
+
 <div>
     <table class="table">
     <thead>
     <tr>
-        <th ng-click="sortBy='id';reverse=!reverse">Item Id</th>
         <th ng-click="sortBy='item_name';reverse=!reverse">Item</th>
         <th>Description</th>
         <th ng-click="sortBy='category';reverse=!reverse">Category</th>
@@ -20,22 +20,20 @@
         <th>Owner</th>
         <th ng-click="sortBy='claimer';reverse=!reverse">Claimed By</th>
         <th>Availability</th>
-        <th>Delete</th>
-
+        <th></th>
     </tr>
     </thead>
 
-    <tbody ng-repeat="item in items | orderBy: sortBy:reverse" class="item">
+    <tbody ng-repeat="item in items | orderBy: sortBy:reverse" ng-hide="checked">
         <tr>
-            <td>{{ item.id }}</td>
             <td>{{ item.item_name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.category }}</td>
             <td>{{ item.created }}</td>
             <td>{{ item.poster.username }}</td>
-            <td>{{ item.claimer }}</td>
+            <td>{{ item.claimer.username }}</td>
             <td>{{ item.availability }}</td>
-            <td bn-index-watch><a ng-click="removeItem(item)">Delete</a></td>
+            <td bn-index-watch><a ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash"></span>Delete</a></td>
         </tr>
     </tbody>
 </table>

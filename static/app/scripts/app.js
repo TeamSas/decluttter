@@ -41,7 +41,7 @@ angular
         })
         .when('/mycrap/myclaimed', {
             templateUrl: 'views/myclaimed.html',
-            controller: 'MycrapCtrl'
+            controller: 'MyclaimedCtrl'
         })
         .when('/mycrap/postitem', {
             templateUrl: 'views/postitem.html',

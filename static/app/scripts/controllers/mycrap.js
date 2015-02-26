@@ -18,7 +18,7 @@ angular.module('declutterApp')
         {category:'AUTOMOTIVE', name:'Automotive'}
     ];
 
-    var items_request = $http.get('/api/items/');
+    var items_request = $http.get('/api/items/poster/');
     items_request.success(function(data){
         console.log("success" + data);
         $scope.items=data;
@@ -68,4 +68,8 @@ angular.module('declutterApp')
             });
     };
 
+    $scope.delete = function(item) {
+        alert("Deleting the item");
+        return item.show = true;
+    };
   });
