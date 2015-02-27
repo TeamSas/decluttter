@@ -18,11 +18,11 @@
 
     <tbody class="friend">
         <tr
-            ng-repeat="user in result_friends | orderBy:  sortBy:reverse"
+            ng-repeat="user in result_friends | orderBy:  sortBy:reverse" ng-show="user.user_name !== undefined"
         >
                 <td>{{ user.user_name }}</td>
                 <td>{{ user.email }}</td>
-                <td bn-index-watch><a ng-click="removeFriend(friend.followee_id, friend.follower_id)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <td bn-index-watch><a ng-click="removeFriend(user.follower_id, user.arrayIndex)"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
     </tbody>
 </table>
