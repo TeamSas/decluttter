@@ -3,7 +3,9 @@ from rest_framework import status
 from appuser.models import Stream, Follower
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from appuser.serializers import StreamSerializer, FollowerSerializer
+from items.api.serializers import UserSerialize
 from django.contrib.auth.models import User
+import pdb
 
 
 class StreamListCreateAPIView(ListCreateAPIView):
@@ -150,3 +152,28 @@ class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         snippet_reverse = Follower.objects.get(followee=follower_id, follower=followee_id)
         snippet_reverse.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Setting up authorization model for access by user to friends detail.
+class FollowerFriendsDetailListAPIView(ListAPIView):
+    serializer_class = UserSerialize
+
+    def get(self, request, user_id, follower_id, *args, **kwargs):
+        # pdb.set_trace()
+        try:
+            if request.user.id != int(user_id):
+                return Response({"error": "You are not authorized."}, status=status.HTTP_403_FORBIDDEN)
+
+        except:
+            pass
+
+        try:
+            if not Follower.objects.get(followee=user_id, follower=follower_id.id):
+                return Response({"error": "You are not friends"}, status=status.HTTP_403_FORBIDDEN)
+
+        except:
+            pass
+
+        queryset = User.objects.get(pk=follower_id)
+        serializer = UserSerialize(queryset)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
