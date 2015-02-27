@@ -13,85 +13,54 @@ angular.module('declutterApp')
     })
   .controller('FriendscrapCtrl', function ($scope, $http, $cookies) {
         //  Step 1:  Get all the data from Item List API
+        $scope.poster_items = {};
+        $http.get('/api/items/').
+        success(function(data){
+            $scope.poster_items['data'] = data;
+            console.log("data type: " + data[0]["id"]);
+            console.log("data length: " + data.length);
+            console.log("scope: " + $scope.poster_items['data'][0]["id"]);
+            console.log("scope.length :" + $scope.poster_items['data'].length);
+        }).
+        error(function(data){
+            console.log("error " + data);
+        });
 
-        var poster_items = $http.get('/api/items/');
-        poster_items.success(function(data){
-            $scope.getObjects = true;
-            $scope.arrayOfObjects = [];
-            for (var i=0;  i<data.length; i++) {
-                var userId = data[i]["poster"]["id"];
-                var userName =  data[i]["poster"]["username"];
-                var item_Name = data[i]["item_name"];
-                var desc = data[i]["description"];
-                var item_id = data[i]["id"];
+        $scope.itemDetailCollection = [];
+        
+        $scope.itemPop = function (){
+            for (var i=0; i<$scope.poster_items['data'].length; i ++){
+                var itemID = $scope.poster_items['data'][i]["id"];
+                var posterID = $scope.poster_items['data'][i]["poster"]["id"];
+                var itemName = $scope.poster_items['data'][i]["item_name"];
+                var avail = $scope.poster_items['data'][i]["availability"];
+                var category = $scope.poster_items['data'][i]["category"];
 
-                // Initialize with empty object and then add user & item details
-                var obj = {};
-                obj["poster_id"] = userId;
-                obj["username"] = userName;
-                obj["item"] = item_Name;
-                obj["desc"] = desc;
-                obj["item_id"] = item_id;
-                $scope.arrayOfObjects.push(obj);
-
-
-                // Step 2: Get all followers from follower list
-                $scope.arrayOfFollowers = [];
-                var friends = $http.get('/api/appuser/list/follower/');
-                friends.success(function(data){
-                    for (var i=0;  i<data.length; i++) {
-                        $scope.arrayOfFollowers.push(data[i]["follower"]);
-                         }
-                    console.log($scope.arrayOfFollowers);
-                    friends_crap($scope.arrayOfFollowers, $scope.arrayOfObjects);
-                    $scope.friends=data;
-
-                    }).
-                error(function(data){
-                console.log("error with friends " + data);
-                    });
-                    }
-                    console.log("array of objects:" + $scope.arrayOfObjects);
-                        $scope.poster_items = data;
-                }).
-                error(function(data){
-                        console.log("error with poster_items " + data);
-                });
-
-        // Step 3: This function will produce resulting array of objects
-
-        var friends_crap = function(Followers, Objects){
-            $scope.resultArray = [];
-//            console.log("hey you reached friends crap custom function");
-//            console.log("follower:    " + Followers.length.toString());
-
-            for (var i=0; i<Followers.length; i++) {
-                for (var j = 0; j < Objects.length; j++) {
-                    if (Followers[i] === Objects[j]["poster_id"]) {
-                        $scope.resultArray.push(Objects[j]);
-                    }
-                    else {
-                        console.log("no match found");
-                    }
-                }
+                var itemObject = {};
+                itemObject['item_id'] = itemID;
+                itemObject['poster_id'] = posterID;
+                itemObject['item_name'] = itemName;
+                itemObject['availability'] = avail;
+                itemObject['category'] = category;
+                $scope.itemDetailCollection.push(itemObject);
             }
-        console.log("resulting array is : " + $scope.resultArray[0]);
         };
+
+        // $scope.itemPop();
+
+        // console.log("itemCollection : " + $scope.itemDetailCollection);
 
         $scope.claim = function(itemId){
             var url = "/api/items/update/" + itemId + "/";
-            var availability = {"availability": false};
-            $http.patch(url, availability).success(function(data){
+            var claimUpdate = {"availability": false, "claimer": $scope.poster_items['data'][0]["poster"["id"]};
+            $http.patch(url, claimUpdate).success(function(data){
                 console.log("Success");
+                console.log("poster_id :" + $scope.poster_items['data'][0]["poster"["id"]);
             }).
             error(function(data){
                 console.log("Failure");
             });
         };
-
-
-
-
 
     });
 

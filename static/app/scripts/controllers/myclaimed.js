@@ -18,7 +18,7 @@ angular.module('declutterApp')
     })
 
   .controller('MyclaimedCtrl', function ($scope, $http, $cookies) {
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    // $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
 
     var items_request = $http.get('/api/items/claimer');
