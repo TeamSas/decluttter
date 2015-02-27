@@ -17,3 +17,7 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = ("id", "poster", "claimer", "item_name", "description", "created", "image", "availability", "category")
 
+class SecondItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+

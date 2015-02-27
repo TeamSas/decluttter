@@ -17,10 +17,8 @@
         <th>Description</th>
         <th ng-click="sortBy='category';reverse=!reverse">Category</th>
         <th ng-click="sortBy='created';reverse=!reverse">Date Posted</th>
-        <th>Owner</th>
-        <th ng-click="sortBy='claimer';reverse=!reverse">Claimed By</th>
         <th>Status</th>
-        <th></th>
+        <th ng-click="sortBy='claimer';reverse=!reverse">Claimed By</th>
         <th></th>
     </tr>
     </thead>
@@ -31,11 +29,9 @@
             <td>{{ item.description }}</td>
             <td>{{ item.category }}</td>
             <td>{{ item.created | date:'shortDate' }}</td>
-            <td>{{ item.poster.username }}</td>
-            <td>{{ item.claimer.username }}</td>
             <td>{{ item.availability | availbool }}</td>
+            <td>{{ item.claimer.username }}</td>
             <td bn-index-watch><a ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash"></span></a></td>
-            <td><a ng-click="deleteItem(item.id)" class="btn btn-small btn-danger">delete</a></td>
         </tr>
     </tbody>
 </table>

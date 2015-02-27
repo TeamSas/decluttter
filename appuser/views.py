@@ -48,7 +48,7 @@ class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, stream_id, format=None, *args, **kwargs):
         snippet = Stream.objects.get(pk=stream_id)
-        serializer = StreamSerializer(snippet, data=request.data)
+        serializer = StreamSerializer(snippet, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
