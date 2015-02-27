@@ -65,6 +65,8 @@ angular.module('declutterApp')
                 console.log("error with followees " + data);
                     });
 
+
+
   });
 
 
