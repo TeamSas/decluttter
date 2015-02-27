@@ -1,8 +1,7 @@
 'use strict';
 
-
 angular.module('declutterApp')
-    .config(function($httpProvider , $interpolateProvider, $resourceProvider){
+  .config(function($httpProvider , $interpolateProvider, $resourceProvider){
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     //** django urls loves trailling slashes which angularjs removes by default.
@@ -71,6 +70,34 @@ angular.module('declutterApp')
                 console.log("error with followees " + data);
                     });
 
+    //$scope.removeFriend = function(followeeId, followerId){
+    //    console.log("url :" + 'api/appuser/update/follower/' + followeeId + "/" + followerId + "/" );
+    //    $http.delete('api/appuser/update/follower/' + followeeId + "/" + followerId + "/").
+    //    success(function(data){
+    //            $scope.snippet.splice(
+    //                $scope.snippet.indexOf(snippet),
+    //                1
+    //            );
+    //        }).
+    //        error(function(data){
+    //            $scope.error = ["Error deleting friend"];
+    //        });
+    //};
+
+    $scope.removeFriend = function(followeeId, followerId) {
+        console.log("url :" + 'api/appuser/update/follower/' + followeeId + "/" + followerId + "/" );
+        var url = "/api/appuser/update/follower/" + followeeId + "/" + followerId + "/";
+        $http.delete(url).success(function(data){
+            console.log("Success");
+            $scope.snippet.splice(
+                $scope.snippet.indexOf(snippet),
+                1
+            )
+        }).
+        error(function(data) {
+            console.log("Failure");
+            });
+    };
 
 
   });

@@ -16,7 +16,7 @@
 
    <tbody class="item">
        <tr
-               ng-repeat="friend in resultArray"
+               ng-repeat="friend in resultArray track by $index"
                ng-if="!friend.hide"
        >
            <td> {{ friend.poster_id}} </td>
