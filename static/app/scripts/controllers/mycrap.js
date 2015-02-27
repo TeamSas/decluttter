@@ -88,10 +88,4 @@ angular.module('declutterApp')
             });
     };
 
-    $scope.delete = function(item) {
-        alert("Deleting the item");
-        return item.show = true;
-    };
-
-
   });
