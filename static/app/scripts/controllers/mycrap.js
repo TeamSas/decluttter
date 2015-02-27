@@ -5,14 +5,16 @@ angular.module('declutterApp')
   .filter('availbool', function(){
         return function(boolValue) {
             if (boolValue === true)
-                return "Claimed";
-            else
                 return "Available";
+            else
+                return "Else";
         };
     })
 
   .controller('MycrapCtrl', function ($scope, $http, $cookies, $location) {
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies['csrftoken'];
+    $http.defaults.headers.put['X-CSRFToken'] = $cookies['csrftoken'];
+    //$http.defaults.headers['delete']['X-CSRFToken'] = $cookies['csrftoken'];
 
     $scope.itemCategories = [
         {category:'BOOKS', name:'Books'},
@@ -45,11 +47,14 @@ angular.module('declutterApp')
         var data = {
             "item_name":$scope.formItemName,
             "description":$scope.formItemDescription,
-            "category":$scope.formItemCategory
+            "category":$scope.formItemCategory,
+            "availability": true
+
         };
 
         $http.post('/api/items/create/', data).
         success(function(data){
+                console.table(data);
                 $scope.items.push({item_name:data.item_name, description:data.description, category:data.category});
                 $scope.formItemName = '';
                 $scope.formItemDescription = '';
@@ -81,5 +86,6 @@ angular.module('declutterApp')
         alert("Deleting the item");
         return item.show = true;
     };
+
 
   });

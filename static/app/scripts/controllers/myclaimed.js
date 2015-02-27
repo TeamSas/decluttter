@@ -5,9 +5,9 @@ angular.module('declutterApp')
   .filter('availbool', function(){
         return function(boolValue) {
             if (boolValue === true)
-                return "Claimed";
-            else
                 return "Available";
+            else
+                return "Claimed";
         };
     })
 
