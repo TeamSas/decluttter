@@ -78,14 +78,6 @@ angular.module('declutterApp')
         console.log("resulting array is : " + $scope.resultArray[0]);
         };
 
-        Object.toparams = function ObjecttoParams(obj) {
-          var p = [];
-          for (var key in obj) {
-            p.push(key + '=' + encodeURIComponent(obj[key]));
-          }
-          return p.join('&');
-        };
-
         $scope.claim = function(itemId){
             var url = "/api/items/update/" + itemId + "/";
             var availability = {"availability": false};
