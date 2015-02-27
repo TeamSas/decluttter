@@ -9,15 +9,19 @@
    <tr>
        <th ng-click="sortBy='distance';reverse=!reverse">ID</th>
        <th ng-click="sortBy='item_name';reverse=!reverse">User Name</th>
-       <th>Item Description </th>
-       <th>Claim This</th>
+       <th>Item </th>
+       <th>Item </th>
+       <th>Item Description</th>
    </tr>
    </thead>
 
-   <tbody ng-repeat="friend in friends" class="item">
+   <tbody ng-repeat="friend in resultArray" class="item">
        <tr>
-           <td> {{ friend.id}} </td>
-           <td> {{ friend.user_name}} </td>
+           <td> {{ friend.poster_id}} </td>
+           <td> {{ friend.username}} </td>
+           <td> {{ friend.item}} </td>
+           <td> {{ friend.desc}} </td>
+
 
 
            <td><a ng-href="#/mycrap/myclaimed">Claim this Item</a></td>
