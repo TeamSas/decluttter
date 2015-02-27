@@ -112,3 +112,28 @@ class ClaimGenericRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Item.objects.all()
+
+
+class ItemDetail2APIView(APIView):
+    def get(self, request, item_id):
+        item = Item.objects.get(pk=item_id)
+        serializer = ItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def delete(self, request, item_id):
+    #     item = Item.objects.get(pk=item_id)
+    #     if item:
+    #         item.delete()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #     else:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        serializer = ItemSerializer(data=request.data)
+        if serializer.is_valid():
+
+            serializer.delete()
+            return Response(serializer.data, status.HTTP_202_ACCEPTED)
+
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
