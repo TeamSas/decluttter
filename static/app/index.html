@@ -41,12 +41,12 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="LoginCtrl">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/friendscrap">Friends Crap</a></li>
-              <li><a ng-href="#/mycrap">My Crap</a></li>
-              <li><a ng-href="#/myfriends">My Friends</a></li>
-              <li><a ng-href="#/login">Login</a></li>
-              <li><a ng-href="#/logout">Logout</a></li>
+              <li ng-class="{ active: isActive('#/')}"><a href="#/">Home</a></li>
+              <li ng-class="{ active: isActive('#/friendscrap')}"><a ng-href="#/friendscrap">Friends Crap</a></li>
+              <li ng-class="{ active: isActive('#/mycrap')}"><a ng-href="#/mycrap">My Crap</a></li>
+              <li ng-class="{ active: isActive('#/myfriends')}"><a href="#/myfriends">My Friends</a></li>
+              <li ng-class="{ active: isActive('#/login')}"><a ng-href="#/login" >Login</a></li>
+              <li ng-class="{ active: isActive('#/logout')}"><a ng-href="#/logout">Logout</a></li>
               <li> Hello {{ logname }}</li>
 
 

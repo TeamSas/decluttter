@@ -19,5 +19,9 @@ angular.module('declutterApp')
         	$scope.errors = data;
         });
       }
-    }
+    };
+  $scope.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+    };
+
   });

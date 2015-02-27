@@ -16,6 +16,7 @@ angular.module('declutterApp')
                 var userName =  data[i]["poster"]["username"];
                 var item_Name = data[i]["item_name"];
                 var desc = data[i]["description"];
+
                 // Initialize with empty object and then add user & item details
                 var obj = {};
                 obj["poster_id"] = userId;

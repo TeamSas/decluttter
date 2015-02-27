@@ -15,8 +15,6 @@
         <th ng-click="sortBy='item_name';reverse=!reverse">Item</th>
         <th>Description</th>
         <th>Owner</th>
-        <th ng-click="sortBy='claimer';reverse=!reverse">Claimed By</th>
-        <th>Status</th>
     </tr>
     </thead>
 
@@ -25,8 +23,6 @@
             <td>{{ item.item_name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.poster.username }}</td>
-            <td>{{ item.claimer.username }}</td>
-            <td>{{ item.availability | availbool }}</td>
         </tr>
     </tbody>
     </table>
