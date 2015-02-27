@@ -65,7 +65,7 @@ angular.module('declutterApp')
 
             error(function(data){
                 $scope.error = ["Error adding new item"];
-                console.log("error" + data.error);
+                console.log("error " + data);
             });
         };
 

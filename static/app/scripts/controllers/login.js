@@ -11,6 +11,7 @@ angular.module('declutterApp')
         djangoAuth.login($scope.model.username, $scope.model.password)
         .then(function(data){
         	// success case
+          console.log('login: ' + data);
         	$location.path("/mycrap");
             $rootScope.logname = $scope.model.username;
         },function(data){
