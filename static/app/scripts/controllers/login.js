@@ -12,7 +12,7 @@ angular.module('declutterApp')
         .then(function(data){
         	// success case
           console.log('login: ' + data);
-        	$location.path("/mycrap");
+        	$location.path("/friendscrap");
             $rootScope.logname = $scope.model.username;
         },function(data){
         	// error case
