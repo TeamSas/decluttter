@@ -17,13 +17,16 @@
     </tr>
     </thead>
 
-    <tbody ng-repeat="user in result_friends | orderBy: sortBy:reverse track by $index" class="friend">
-        <tr>
-            <td>{{ user.user_name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.first_name }}</td>
-            <td>{{ user.last_name }}</td>
-            <td><a ng-click="removeFriend(friend)" class="btn btn-small btn-danger">Delete</a></td>
+<<<<<<< HEAD
+    <tbody class="friend">
+        <tr
+            ng-repeat="user in result_friends | orderBy:  sortBy:reverse"
+        >
+                <td>{{ user.user_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td><a ng-click="removeFriend(friend)" class="btn btn-small btn-danger">Delete</a></td>
 
         </tr>
     </tbody>

@@ -14,17 +14,18 @@
    </tr>
    </thead>
 
-   <tbody ng-repeat="friend in resultArray track by $index" class="item">
-       <tr>
+   <tbody class="item">
+       <tr
+               ng-repeat="friend in resultArray"
+               ng-if="!friend.hide"
+       >
            <td> {{ friend.poster_id}} </td>
            <td> {{ friend.username}} </td>
            <td> {{ friend.item}} </td>
            <td> {{ friend.desc}} </td>
-           <td><a ng-click="claim(friend.item_id)" class="btn btn-small btn-primary">Claim This</a></td>
-<!--
-           <td><a ng-href="#/mycrap/myclaimed">Claim this Item</a></td>
-           <td><a ng-href="#/mycrap/myclaimed">class="btn btn-small btn-primary">Claim This</a></td>
--->
+           <td><a ng-click="claim(friend.item_id)" class="btn btn-small btn-primary">Claim</a></td>
+           <td><a ng-click="friend.hide = true;" class="btn btn-small btn-warning">Hide</a></td>
+
        </tr>
    </tbody>
 </table>
