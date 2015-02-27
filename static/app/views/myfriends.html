@@ -17,7 +17,7 @@
     </tr>
     </thead>
 
-    <tbody ng-repeat="user in result_friends | orderBy: sortBy:reverse" class="friend">
+    <tbody ng-repeat="user in result_friends | orderBy: sortBy:reverse track by $index" class="friend">
         <tr>
             <td>{{ user.user_name }}</td>
             <td>{{ user.email }}</td>

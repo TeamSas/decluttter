@@ -2,6 +2,12 @@
 
 
 angular.module('declutterApp')
+    .config(function($httpProvider , $interpolateProvider, $resourceProvider){
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    //** django urls loves trailling slashes which angularjs removes by default.
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+    })
   .controller('MyfriendsCtrl', function ($scope, $http, $cookies) {
           $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
           $scope.addFriend = function () {

@@ -5,8 +5,15 @@
 'use strict';
 
 angular.module('declutterApp')
-  .controller('FriendscrapCtrl', function ($scope, $http) {
+    .config(function($httpProvider , $interpolateProvider, $resourceProvider){
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    //** django urls loves trailling slashes which angularjs removes by default.
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+    })
+  .controller('FriendscrapCtrl', function ($scope, $http, $cookies) {
         //  Step 1:  Get all the data from Item List API
+
         var poster_items = $http.get('/api/items/');
         poster_items.success(function(data){
             $scope.getObjects = true;
@@ -16,6 +23,7 @@ angular.module('declutterApp')
                 var userName =  data[i]["poster"]["username"];
                 var item_Name = data[i]["item_name"];
                 var desc = data[i]["description"];
+                var item_id = data[i]["id"];
 
                 // Initialize with empty object and then add user & item details
                 var obj = {};
@@ -23,6 +31,7 @@ angular.module('declutterApp')
                 obj["username"] = userName;
                 obj["item"] = item_Name;
                 obj["desc"] = desc;
+                obj["item_id"] = item_id;
                 $scope.arrayOfObjects.push(obj);
 
 
@@ -69,7 +78,24 @@ angular.module('declutterApp')
         console.log("resulting array is : " + $scope.resultArray[0]);
         };
 
+        Object.toparams = function ObjecttoParams(obj) {
+          var p = [];
+          for (var key in obj) {
+            p.push(key + '=' + encodeURIComponent(obj[key]));
+          }
+          return p.join('&');
+        };
 
+        $scope.claim = function(itemId){
+            var url = "/api/items/update/" + itemId + "/";
+            var availability = {"availability": false};
+            $http.patch(url, availability).success(function(data){
+                console.log("Success");
+            }).
+            error(function(data){
+                console.log("Failure");
+            });
+        };
 
 
 

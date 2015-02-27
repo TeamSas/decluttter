@@ -1,6 +1,12 @@
 'use strict';
 
 angular.module('declutterApp')
+    .config(function($httpProvider , $interpolateProvider, $resourceProvider){
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    //** django urls loves trailling slashes which angularjs removes by default.
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+    })
 
   .filter('availbool', function(){
         return function(boolValue) {
