@@ -12,22 +12,17 @@
     <tr>
         <th ng-click="sortBy='username';reverse=!reverse">Username</th>
         <th ng-click="sortBy='email';reverse=!reverse">Email</th>
-        <th ng-click="sortBy='first_name';reverse=!reverse">First Name</th>
-        <th ng-click="sortBy='last_name';reverse=!reverse">Last Name</th>
+        <th></th>
     </tr>
     </thead>
 
-<<<<<<< HEAD
     <tbody class="friend">
         <tr
             ng-repeat="user in result_friends | orderBy:  sortBy:reverse"
         >
                 <td>{{ user.user_name }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td><a ng-click="removeFriend(friend)" class="btn btn-small btn-danger">Delete</a></td>
-
+                <td bn-index-watch><a ng-click="removeFriend(friend.followee_id, friend.follower_id)"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
     </tbody>
 </table>
