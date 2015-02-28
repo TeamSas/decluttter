@@ -1,38 +1,37 @@
-
 <br>
 <br>
 <div class="well">
 <p class="lead" id="myitems">My Friends Items
 <div>
-   <table class="table">
-   <thead>
-   <tr>
-       <th ng-click="sortBy='distance';reverse=!reverse">ID</th>
-       <th ng-click="sortBy='item_name';reverse=!reverse">User Name</th>
-       <th>Item </th>
-       <th>Description</th>
-       <th>Availability</th>
+  <table class="table">
+  <thead>
+  <tr>
+      <th ng-click="sortBy='distance';reverse=!reverse">ID</th>
+      <th ng-click="sortBy='item_name';reverse=!reverse">User Name</th>
+      <th>Item </th>
+      <th>Description</th>
+      <th>Availability</th>
 
-   </tr>
-   </thead>
+  </tr>
+  </thead>
 
-   <tbody class="item">
-       <tr
-               ng-repeat="friend in resultArray track by $index"
-               ng-show="friend.avail === true"
-       >
-           <td> {{ friend.poster_id}} </td>
-           <td> {{ friend.username}} </td>
-           <td> {{ friend.item}} </td>
-           <td> {{ friend.desc}} </td>
-           <td> {{ friend.availability}} </td>
+  <tbody class="item">
+      <tr
+              ng-repeat="friend in resultArray track by $index"
+              ng-show="friend.availability === true"
+      >
+          <td> {{ friend.poster_id}} </td>
+          <td> {{ friend.username}} </td>
+          <td> {{ friend.item}} </td>
+          <td> {{ friend.desc}} </td>
+          <td> {{ friend.availability}} </td>
 
 
-           <td><a ng-click="claim(friend.item_id)" class="btn btn-small btn-primary">Claim</a></td>
-           <td><a ng-click="friend.hide = true;" class="btn btn-small btn-warning">Hide</a></td>
+          <td><a ng-click="claim(friend.item_id)" class="btn btn-small btn-primary">Claim</a></td>
+          <td><a ng-click="friend.hide = true;" class="btn btn-small btn-warning">Hide</a></td>
 
-       </tr>
-   </tbody>
+      </tr>
+  </tbody>
 </table>
 </div>
 </div>

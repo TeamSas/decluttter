@@ -22,7 +22,7 @@
         >
                 <td>{{ user.user_name }}</td>
                 <td>{{ user.email }}</td>
-                <td bn-index-watch><a ng-click="removeFriend(user.follower_id, user.arrayIndex)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <td bn-index-watch><a ng-click="removeFriend(user.follower_id, $index)"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
     </tbody>
 </table>

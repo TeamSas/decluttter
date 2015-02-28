@@ -24,6 +24,7 @@ angular.module('declutterApp')
                     var availability = data[i]["availability"];
                     var desc = data[i]["description"];
                     var item_id = data[i]["id"];
+                    // var item_index = counter +=1;
 
                     // Initialize with empty object and then add user & item details
                     var obj = {};
@@ -33,6 +34,7 @@ angular.module('declutterApp')
                     obj["desc"] = desc;
                     obj["item_id"] = item_id;
                     obj["availability"] = availability;
+                    // obj["item_index"] = item_index;
 
                     $scope.arrayOfObjects.push(obj);
 
@@ -100,6 +102,20 @@ angular.module('declutterApp')
                 }
             }
 
+        };
+
+        $scope.claim = function(itemId, itemIndex){
+            var url = "/api/items/update/" + itemId + "/";
+            var claimUpdate = {"availability": false, "claimer": $scope.currentUser };
+            $http.patch(url, claimUpdate).success(function(data){
+                console.log("Success");
+                console.log("poster_id :" + $scope.currentUser);
+                $scope.resultArray.splice(itemIndex, 1);
+                console.log("ItemIndex :" + itemIndex);
+            }).
+            error(function(data){
+                console.log("Failure");
+            });
         };
 
 
