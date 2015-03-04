@@ -1,11 +1,7 @@
 'use strict';
 
 angular.module('declutterApp')
-    .config(function($httpProvider , $interpolateProvider, $resourceProvider){
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $resourceProvider.defaults.stripTrailingSlashes = false;
-    })
+
 
   .controller('FriendscrapCtrl', function ($scope, $q, $http) {
 

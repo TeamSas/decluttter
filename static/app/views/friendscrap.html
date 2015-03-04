@@ -27,7 +27,7 @@
           <td> {{ friend.availability}} </td>
 
 
-          <td><a ng-click="claim(friend.item_id)" class="btn btn-small btn-primary">Claim</a></td>
+          <td><a ng-click="claim(friend.item_id, $index)" class="btn btn-small btn-primary">Claim</a></td>
           <td><a ng-click="friend.hide = true;" class="btn btn-small btn-warning">Hide</a></td>
 
       </tr>
