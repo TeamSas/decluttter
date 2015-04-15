@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -30,18 +31,27 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
             </button>
 
             <a class="navbar-brand" href="#/">declutter</a>
+
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+          <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="LoginCtrl">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+              <li ng-class="{ active: isActive('#/')}"><a href="#/">Home</a></li>
+              <li ng-class="{ active: isActive('#/friendscrap')}"><a ng-href="#/friendscrap">Friends Crap</a></li>
+              <li ng-class="{ active: isActive('#/mycrap')}"><a ng-href="#/mycrap">My Crap</a></li>
+              <li ng-class="{ active: isActive('#/myfriends')}"><a href="#/myfriends">My Friends</a></li>
+              <li ng-class="{ active: isActive('#/login')}"><a ng-href="#/login" >Login</a></li>
+              <li ng-class="{ active: isActive('#/logout')}"><a ng-href="#/logout">Logout</a></li>
+              <li> Hello {{ logname }}</li>
+
+
             </ul>
+          <!--<img src="/images/noun_28242_cc.png" class="img pull-right" style="width: 7%; height: 7%"/-->
           </div>
         </div>
       </div>
@@ -53,7 +63,10 @@
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <img src="/images/noun_28242_cc.png" class="img pull-right" style="width: 7%; height: 7%"/>
+
+        <p><span class="glyphicon glyphicon-ice-lolly-tasted"></span> from Team SAS | Don't be a pack mule... decrapify!</p>
+        <p>Image created by Luis Prado from the Noun Project</p>
       </div>
     </div>
 
@@ -71,7 +84,9 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -83,8 +98,17 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/djangoAuth.js"></script>
+        <script src="scripts/services/validate.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/friendscrap.js"></script>
+        <script src="scripts/controllers/mycrap.js"></script>
+        <script src="scripts/controllers/myclaimed.js"></script>
+        <script src="scripts/controllers/myfriends.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/logout.js"></script>
+        <script src="scripts/controllers/register.js"></script>
         <!-- endbuild -->
 </body>
 </html>

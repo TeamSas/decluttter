@@ -3,12 +3,17 @@ from rest_framework import status
 from appuser.models import Stream, Follower
 from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from appuser.serializers import StreamSerializer, FollowerSerializer
+from items.api.serializers import UserSerialize
 from django.contrib.auth.models import User
+import pdb
 
 
 class StreamListCreateAPIView(ListCreateAPIView):
-    queryset = Stream.objects.all()
     serializer_class = StreamSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Stream.objects.filter(user=user)
 
     def post(self, request, *args, **kwargs):
         serializer = StreamSerializer(data=request.data)
@@ -43,7 +48,7 @@ class StreamRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, stream_id, format=None, *args, **kwargs):
         snippet = Stream.objects.get(pk=stream_id)
-        serializer = StreamSerializer(snippet, data=request.data)
+        serializer = StreamSerializer(snippet, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -61,7 +66,18 @@ class FollowerCreateAPIView(CreateAPIView):
     serializer_class = FollowerSerializer
 
     def post(self, request, *args, **kwargs):
-        follower_id = User.objects.get(email=request.data['follower'])
+        try:
+            follower_id = User.objects.get(email=request.data['follower'])
+
+        except:
+           return Response({"error": "This user does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            if Follower.objects.get(followee=request.user.id, follower=follower_id.id):
+                return Response({"error": "You are already friends"}, status=status.HTTP_404_NOT_FOUND)
+
+        except:
+            pass
 
         data = {
             'followee': request.user.id,
@@ -76,18 +92,23 @@ class FollowerCreateAPIView(CreateAPIView):
         serializer = FollowerSerializer(data=data)
         serializer_reverse = FollowerSerializer(data=data_reverse)
 
+
         if serializer.is_valid() and serializer_reverse.is_valid():
             serializer.save()
             serializer_reverse.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
-            return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Please enter a valid email"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowerListAPIView(ListAPIView):
-    queryset = Follower.objects.all()
+    # queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
+    def get_queryset(self):
+        user = self.request.user.id
+        return Follower.objects.filter(followee=user)
 
 
 class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -131,3 +152,28 @@ class FollowerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         snippet_reverse = Follower.objects.get(followee=follower_id, follower=followee_id)
         snippet_reverse.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Setting up authorization model for access by user to friends detail.
+class FollowerFriendsDetailListAPIView(ListAPIView):
+    serializer_class = UserSerialize
+
+    def get(self, request, user_id, follower_id, *args, **kwargs):
+        # pdb.set_trace()
+        try:
+            if request.user.id != int(user_id):
+                return Response({"error": "You are not authorized."}, status=status.HTTP_403_FORBIDDEN)
+
+        except:
+            pass
+
+        try:
+            if not Follower.objects.get(followee=user_id, follower=follower_id.id):
+                return Response({"error": "You are not friends"}, status=status.HTTP_403_FORBIDDEN)
+
+        except:
+            pass
+
+        queryset = User.objects.get(pk=follower_id)
+        serializer = UserSerialize(queryset)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

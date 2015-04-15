@@ -1,13 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name declutterApp
- * @description
- * # declutterApp
- *
- * Main module of the application.
- */
 angular
   .module('declutterApp', [
     'ngAnimate',
@@ -20,54 +12,94 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: '/views/main.html',
         controller: 'MainCtrl'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
+        templateUrl: '/views/about.html',
         controller: 'AboutCtrl'
       })
       .when('/login', {
-            templateURL: 'views/login.html',
+            templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
-        })
+      })
         .when('/logout', {
-            templateURL: 'views/logout.html',
+            templateUrl: 'views/logout.html',
             controller: 'LogoutCtrl'
-        })
+      })
         .when('/register', {
-            templateURL: 'views/register.html',
+            templateUrl: 'views/register.html',
             controller: 'RegisterCtrl'
-        })
+      })
         .when('/friendscrap', {
-            templateURL: 'views/friendscrap.html',
-            controller: 'FriendscrapCtrl'
+            templateUrl: 'views/friendscrap.html',
+            controller: 'FriendscrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
         })
         .when('/mycrap', {
-            templateURL: 'views/mycrap.html',
-            controller: 'MycrapCtrl'
+            templateUrl: 'views/mycrap.html',
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/myclaimed', {
-            templateURL: 'views/myclaimed.html',
-            controller: 'MycrapCtrl'
+            templateUrl: 'views/myclaimed.html',
+            controller: 'MyclaimedCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/postitem', {
-            templateURL: 'views/postitem.html',
-            controller: 'MycrapCtrl'
+            templateUrl: 'views/postitem.html',
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/mycrap/:item', {
-            templateURL: 'views/edititem.html',
-            controller: 'MycrapCtrl'
+            templateUrl: 'views/edititem.html',
+            controller: 'MycrapCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/myfriends', {
-            templateURL: 'views/myfriends.html',
-            controller: 'MyfriendsCtrl'
+            templateUrl: 'views/myfriends.html',
+            controller: 'MyfriendsCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
         .when('/myfriends/addfriend', {
-            templateURL: 'views/addfriend.html',
-            controller: 'MyfriendsCtrl'
+            templateUrl: 'views/addfriend.html',
+            controller: 'MyfriendsCtrl',
+            resolve: {
+            authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+            }],
+            }
         })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }).config(function($httpProvider){
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    }).config(function($resourceProvider) {
+        $resourceProvider.defaults.stripTrailingSlashes = false;
+    });

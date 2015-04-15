@@ -4,7 +4,7 @@ from appuser.models import Stream, Follower
 class StreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stream
-        fields = ("id", "item", "created", "status", "deleted_status")
+        fields = ("id", "item", "created", "status", "deleted_status", "user")
 
 
 class FollowerSerializer(serializers.ModelSerializer):

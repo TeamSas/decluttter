@@ -1,8 +1,8 @@
 from rest_framework.views import APIView, Response
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView
-from items.api.serializers import ItemSerializer
-from items.models import Item
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView
+from items.api.serializers import ItemSerializer, SecondItemSerializer
+from items.models import Item, User
 
 
 class ItemListAPIView(APIView):
@@ -32,7 +32,7 @@ class ItemDetailAPIView(APIView):
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
 
-            serializer.save()
+            serializer.save(poster=request.user)
             return Response(serializer.data, status.HTTP_202_ACCEPTED)
 
         else:
@@ -46,7 +46,7 @@ class ItemCreateAPIView(CreateAPIView):
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
 
-            serializer.save()
+            serializer.save(poster=request.user)
             return Response(serializer.data, status.HTTP_201_CREATED)
 
         else:
@@ -68,3 +68,107 @@ class ItemGenericRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Item.objects.all()
+
+
+class ItemListCreateAPIView(ListCreateAPIView):
+   serializer_class = ItemSerializer
+
+   def get_queryset(self):
+       user = self.request.user
+       return Item.objects.filter(poster=user)
+
+
+class ClaimItemListCreateAPIView(ListCreateAPIView):
+    serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.filter(claimer=user)
+
+
+class ClaimItemDetailAPIView(CreateAPIView):
+    serializer_class = ItemSerializer
+
+    def put(self, request, *args, **kwargs):
+        serializer = ItemSerializer(data=request.data)
+        item = Item.objects.filter(pk=kwargs['item_id'])
+        user = self.request.user
+        # user = User.objects.get(username=request.DATA['user'])
+        item.update(claimer=user)
+
+        if serializer.is_valid():
+            serializer.save(claimer=request.user)
+            #can we add availability=false here?
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+class ClaimGenericRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    model = Item
+    serializer_class = ItemSerializer
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        return Item.objects.all()
+
+
+class ItemDetail2APIView(APIView):
+    def get(self, request, item_id):
+        item = Item.objects.get(pk=item_id)
+        serializer = ItemSerializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def delete(self, request, item_id):
+    #     item = Item.objects.get(pk=item_id)
+    #     if item:
+    #         item.delete()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #     else:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        serializer = ItemSerializer(data=request.data)
+        if serializer.is_valid():
+
+            serializer.delete()
+            return Response(serializer.data, status.HTTP_202_ACCEPTED)
+
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+class ItemUpdate(RetrieveUpdateAPIView):
+    serializer_class = SecondItemSerializer
+
+    def get(self, request, item_id, format=None, *args, **kwargs):
+        try:
+            queryset = Item.objects.get(pk=item_id)
+            serializer = SecondItemSerializer(queryset)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+    def put(self, request, item_id, format=None, *args, **kwargs):
+        snippet = Item.objects.get(pk=item_id)
+        serializer = SecondItemSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"error": "This item does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, item_id, format=None, *args, **kwargs):
+        snippet = Item.objects.get(pk=item_id)
+        serializer = SecondItemSerializer(snippet, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"error": "This stream does not exist"}, status=status.HTTP_404_NOT_FOUND)
+

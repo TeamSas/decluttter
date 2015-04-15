@@ -1,2 +1,2 @@
 # decluttter
-App to declutter your life.
+App to declutter your life and then stuff.

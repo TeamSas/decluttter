@@ -2,3 +2,4 @@ local_settings.py
 *.pyc
 .idea/
 declutter_db.sqlite3
+declutter_db.sqlite3.orig

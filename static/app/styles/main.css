@@ -80,4 +80,12 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+
+  .other-color{
+      background: #dbeaf0;
+  }
+
+  .well{
+      background-color: #dbeaf0;
+}
 }

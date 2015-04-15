@@ -1,0 +1,39 @@
+<div class="btn-group">
+    <label class="btn btn" ng-model="radioModel" btn-radio="'mycrap'"><a ng-href="#/mycrap">My Posted Items</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'postitem'"><a ng-href="#/mycrap/postitem">Post New Item</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'myclaimed'"><a ng-href="#/mycrap/myclaimed">My Claimed Items</a></label>
+</div>
+<br>
+<br>
+<div class="well">
+<p class="lead" id="myitems">Stuff I'm Currently Trying to Give Away</p>
+<p><strong>{{ getTotalItems() }}</strong> items posted.</p>
+
+<div>
+    <table class="table">
+    <thead>
+    <tr>
+        <th ng-click="sortBy='item_name';reverse=!reverse">Item</th>
+        <th>Description</th>
+        <th ng-click="sortBy='category';reverse=!reverse">Category</th>
+        <th ng-click="sortBy='created';reverse=!reverse">Date Posted</th>
+        <th>Status</th>
+        <th ng-click="sortBy='claimer';reverse=!reverse">Claimed By</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody ng-repeat="item in items | orderBy: sortBy:reverse" ng-hide="checked">
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.created | date:'shortDate' }}</td>
+            <td>{{ item.availability | availbool }}</td>
+            <td>{{ item.claimer.username }}</td>
+            <td bn-index-watch><a ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>

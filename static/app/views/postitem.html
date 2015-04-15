@@ -1,0 +1,28 @@
+<div class="btn-group">
+    <label class="btn btn" ng-model="radioModel" btn-radio="'mycrap'"><a ng-href="#/mycrap">My Posted Items</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'postitem'"><a ng-href="#/mycrap/postitem">Post New Item</a></label>
+    <label class="btn btn" ng-model="radioModel" btn-radio="'myclaimed'"><a ng-href="#/mycrap/myclaimed">My Claimed Items</a></label>
+</div>
+<br>
+<br>
+<div class="well">
+<p class="lead" id="additem">Post a New Item
+    <form class="form-group" name="newitemForm">
+    <p>Item Name:   <input type="text" ng-model="formItemName" required></p>
+    <p>Description:  <input type="text" ng-model="formItemDescription" required></p>
+    <p>Category:  <select ng-model="formItemCategory" required>
+        <option style="display:none" value class>select a category</option>
+        <option value="BOOKS">Books</option>
+        <option value="ENTERTAINMENT">Movies, Music, and Games</option>
+        <option value="ELECTRONICS">Electronics and Computers</option>
+        <option value="HOME">Home</option>
+        <option value="GARDEN">Garden and Tools</option>
+        <option value="BEAUTY">Beauty and Health</option>
+        <option value="TOYS">Toys, Kids and Baby</option>
+        <option value="CLOTHING">Clothing, Shoes and Jewelry</option>
+        <option value="SPORTS">Sports and Outdoors</option>
+        <option value="AUTOMOTIVE">Automotive</option></select></p>
+    <button class="btn btn-primary" ng-click="addItem()"><strong>Add Item</strong></button>
+</form>
+</p>
+</div>

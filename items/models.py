@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -20,8 +21,8 @@ class Item(models.Model):
         ('AUTOMOTIVE', 'Automotive'),
     )
 
-    poster_id = models.IntegerField()
-    claimer_id = models.IntegerField()
+    poster = models.ForeignKey(User, related_name="posted_items")
+    claimer = models.ForeignKey(User, null=True, blank=True, related_name="claimed_items")
     item_name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     created = models.DateField(auto_now_add=True)
@@ -29,5 +30,6 @@ class Item(models.Model):
     availability = models.BooleanField(default=True)
     category = models.CharField(max_length=50, choices=CATEGORIES)
 
-    def __str__(self):
-        return "%s on %" % (self.item_name, self.created)
+    def __unicode__(self):
+        return "{} on {}".format(self.item_name, self.created)
+

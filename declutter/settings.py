@@ -36,15 +36,24 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'appuser',
     'items',
-    'debug_toolbar'
+    'debug_toolbar',
+    'rest_auth',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,11 +64,26 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 )
 
 ROOT_URLCONF = 'declutter.urls'
 
 WSGI_APPLICATION = 'declutter.wsgi.application'
+
+#For Django-allauth Template Context Processor Settings
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.request",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "allauth.socialaccount.context_processors.socialaccount"
+)
 
 
 # Database
@@ -85,6 +109,31 @@ USE_L10N = True
 
 USE_TZ = True
 
+#CORs settings
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'X-CSRFToken',
+    'Api-Authorization',
+)
+
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+)
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -103,6 +152,7 @@ REST_FRAMEWORK = {
     )
 }
 
+SITE_ID = 1
 
 #EMAIL settings
 EMAIL_USE_TLS = True
